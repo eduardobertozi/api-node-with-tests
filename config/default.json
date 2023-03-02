@@ -3,7 +3,7 @@
         "mongoUrl": "mongodb+srv://eduardobertozi:bjeduardobj15@node-book-course.1mg3jmq.mongodb.net/production?retryWrites=true&w=majority"
     },
     "auth": {
-        "key": "Hse14bis@BR1717/we12x4r$BRASIL",
+        "key": "thisisaverysecurekey",
         "tokenExpiresIn": "7d"
     }
 }

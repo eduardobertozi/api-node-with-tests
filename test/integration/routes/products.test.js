@@ -1,4 +1,5 @@
-import Product from "../../../src/models/product.js"
+import Product from '../../../src/models/product.js'
+import AuthService from '../../../src/services/auth.js'
 
 describe('Routes: Products', () => {
     const defaultId = '56cb91bdc3464f14678934ca'
@@ -16,6 +17,15 @@ describe('Routes: Products', () => {
         price: 100
     }
 
+    const expectedAdminUser = {
+        _id: defaultId,
+        name: 'John Doe',
+        email: 'john@mail.com',
+        role: 'admin'
+    }
+
+    const authToken = AuthService.generateToken(expectedAdminUser)
+
     beforeEach(async () => {
         await Product.deleteMany()
 
@@ -30,6 +40,7 @@ describe('Routes: Products', () => {
         it('should return a list of products', (done) => {
             request
                 .get('/products')
+                .set({ 'x-access-token': authToken })
                 .end((err, res) => {
                     expect(res.body).to.eql([expectedProduct])
                     done(err)
@@ -40,6 +51,7 @@ describe('Routes: Products', () => {
             it('should return 200 with one product', (done) => {
                 request
                     .get(`/products/${defaultId}`)
+                    .set({ 'x-access-token': authToken })
                     .end((err, res) => {
                         expect(res.statusCode).to.eql(200)
                         expect(res.body).to.eql([expectedProduct])
@@ -53,7 +65,7 @@ describe('Routes: Products', () => {
         context('when posting a product', () => {
             it('should return a new product with status code 201', (done) => {
                 const customId = '56cb91bdc3464f14678934ba'
-                const newProduct = Object.assign({}, {_id: customId, __v:0 }, defaultProduct)
+                const newProduct = Object.assign({}, { _id: customId, __v: 0 }, defaultProduct)
 
                 const expectedSaveProduct = {
                     __v: 0,
@@ -62,16 +74,17 @@ describe('Routes: Products', () => {
                     description: 'product description',
                     price: 100
                 }
-    
+
                 request
                     .post('/products')
+                    .set({ 'x-access-token': authToken })
                     .send(newProduct)
                     .end((err, res) => {
                         expect(res.statusCode).to.eql(201)
                         expect(res.body).to.eql(expectedSaveProduct)
                         done(err)
                     })
-            })  
+            })
         })
     })
 
@@ -83,9 +96,10 @@ describe('Routes: Products', () => {
                 }
 
                 const updatedProduct = Object.assign({}, customProduct, defaultProduct)
-                
+
                 request
                     .put(`/products/${defaultId}`)
+                    .set({ 'x-access-token': authToken })
                     .send(updatedProduct)
                     .end((err, res) => {
                         expect(res.status).to.eql(200)
@@ -101,6 +115,7 @@ describe('Routes: Products', () => {
 
                 request
                     .delete(`/products/${defaultId}`)
+                    .set({ 'x-access-token': authToken })
                     .end((err, res) => {
                         expect(res.status).to.eql(204)
                         done(err)

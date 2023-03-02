@@ -5,10 +5,15 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "test": "npm run test:unit && npm run test:integration",
+    "start": "clear && node server.js",
+    "test": "clear && npm run test:unit && npm run test:integration",
     "test:integration": "mocha --config=test/integration/.mocharc.json --node-env=test  test/integration/**/*.test.js",
-    "test:unit": "mocha --config=test/unit/.mocharc.json --node-env=test  test/unit/**/*.test.js"
+    "test:unit": "mocha --config=test/unit/.mocharc.json --node-env=test  test/unit/**/*.test.js",
+    "lint": "eslint src --ext .js",
+    "lint:fix": "eslint src --fix --ext .js",
+    "prettier:list": "prettier --check 'src/**/*.js'",
+    "prettier:fix": "prettier --write 'src/**/*.js'",
+    "style:fix": "npm run lint:fix & npm run prettier:fix"
   },
   "keywords": [
     "nodejs",
@@ -28,7 +33,10 @@
   },
   "devDependencies": {
     "chai": "^4.3.7",
+    "eslint": "^8.35.0",
+    "eslint-plugin-node": "^11.1.0",
     "mocha": "^10.2.0",
+    "prettier": "^2.8.4",
     "sinon": "^9.2.4",
     "supertest": "^6.3.3"
   }

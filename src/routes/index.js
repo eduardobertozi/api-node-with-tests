@@ -8,5 +8,4 @@ router.use('/products', productsRoute)
 router.use('/users', userRoutes)
 router.get('/', (req, res) => res.send('Hello World!'))
 
-
 export default router
