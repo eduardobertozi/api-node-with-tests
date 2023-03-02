@@ -1,5 +1,0 @@
-{
-    "database": {
-        "mongoUrl": "mongodb+srv://eduardobertozi:bjeduardobj15@node-book-course.1mg3jmq.mongodb.net/test?retryWrites=true&w=majority"
-    }
-}
