@@ -1,0 +1,17 @@
+{
+    "diff": true,
+    "extension": [
+        "js"
+    ],
+    "package": "../package.json",
+    "reporter": "spec",
+    "slow": 5000,
+    "timeout": 5000,
+    "file": [
+        "test/integration/helpers.js",
+        "test/integration/globals.js"
+    ],
+    "watch-files": [
+        "test/**/*.js"
+    ]
+}
